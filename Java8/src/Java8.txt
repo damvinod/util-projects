@@ -1,0 +1,135 @@
+Java 8:
+
+1) Lambada:
+
+	Lambada expression helps to remove boiler plate codes and Anonymous class.
+
+
+2) Functional Interface:
+
+	Java 8 enables to write functional programming with the help of Functional interfaces (@ FunctionalIterface). 
+	
+	Functional Interface can have only one method signature (one Abstract method) and multiple static (or) default methods which can have implementations (new feature to have implementation in interface).
+	
+	Java 8 has some in build Functional Interfaces as below in addition to the Runnable and Comparator interface.
+	
+	We cant use this inside lambada expression in main method but can be used inside the methods.
+
+	Supplier: Accepts no input but returns one Object
+	Consumer: Accepts one Input object and returns void
+	Predicate: Accepts one Input object and returns boolean
+	Function: Accepts one Input object and returns one object
+
+		//############ FUNCTIONAL INTERFACE #############  
+		
+		// Input is Person and Output is void
+		Consumer<Person> myConsumer = (Person person) -> {
+			System.out.println("Consumer name: " + person.getName());
+		};
+		myConsumer.accept(list.get(0));
+		
+		// No Input and Output is Date
+		Supplier<Date> mySupplier = () -> {
+			return new Date();
+		};
+		System.out.println("Supplier Time: " + mySupplier.get().getTime());
+		
+		// Input is Person and Output is boolean
+		Predicate<Person> myPredicate = (Person person) -> {
+			if(person.getAge() > 5)
+				return true;
+			else 
+				return false;
+		};
+		System.out.println("Predicate age: " + myPredicate.test(list.get(0)));
+
+		//Input is Person and Output is String
+		Function<Person, String> myFunction = (Person s) -> {
+			return s.getName();
+		};
+		System.out.println("Function name: " + myFunction.apply(list.get(0)));
+
+3) Streams:
+
+	In Java 8 streams API is introduced to perform Internal Iteration for Collections instead of External iteration (Iterator, enhanced for loop).
+	
+	Parallel Streams are introduced to process the collections in less execution time.
+
+	//############ STREAM LIST #############
+		
+		Stream<Person> myListStream = list.stream();
+		
+		System.out.println(myListStream.filter(myPredicate).collect(Collectors.toList()).size());
+		
+		myListStream.forEach(myConsumer);
+		
+		Comparator<Person> myComparator = (Person p1, Person p2) -> {
+			return p2.getAge().compareTo(p1.getAge());
+		};
+		
+		myListStream.sorted(myComparator).collect(Collectors.toList()).forEach((Person person) -> System.out.println(person.getAge()));
+		
+	//############ STREAM MAP #############
+		
+		Stream<Entry<String, Person>> myMapStream = map.entrySet().stream();
+		
+		Predicate<Entry<String, Person>> mapPredicate = (Entry<String,Person> entry) -> {
+			
+			if(entry.getValue().getAge() > 5)
+				return true;
+			else 
+				return false;
+		};
+
+		Function<Entry<String,Person>, String> myMapKeyFunction = (Entry<String,Person> mapTemp) -> {
+			return mapTemp.getKey();
+		};
+		
+		Map<String, Person> filteredMap = myMapStream.filter(mapPredicate).collect(Collectors.toMap(myMapKeyFunction, (Entry<String, Person> entry) -> entry.getValue()));
+		
+		System.out.println(filteredMap.size());
+		System.out.println(map.size());
+
+4) Multiple Interfaces with same default methods: 
+
+public interface MyFirstInterface {
+
+	default public void myMethod(){
+		System.out.println("MySecondFunctionInterface");
+	}
+	
+	
+}
+
+public interface MySecondInterface {
+
+	default public void myMethod(){
+		System.out.println("MySecondFunctionInterface");
+	}
+	
+	
+}
+
+public class Java8 implements MyFirstInterface, MySecondInterface {
+
+	//Since the same method name conflict so have to override like below
+	@Override
+	public void myMethod() {
+		// TODO Auto-generated method stub
+		MySecondInterface.super.myMethod();
+	}
+
+}
+
+5) Method References:
+
+	Method reference can't be used for any method. They can only be used to replace a single-method lambda expression.
+
+	So to use a method reference, you first need a lambda expression with one method. And to use a lambda expression, you first need a functional interface, an interface with just one abstract method.
+	
+	Instead of using
+	AN ANONYMOUS CLASS
+	you can use
+	A LAMBDA EXPRESSION
+	And if this just calls one method, you can use
+	A METHOD REFERENCE

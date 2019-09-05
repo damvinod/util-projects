@@ -1,0 +1,25 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="helloWorld1" class="com.damvinod.spring.basics.HelloWorld" scope="prototype" autowire="byName">
+		<property name="message" value="Hello World"></property>
+		<!-- <property name="person" ref="person"></property> -->
+		
+		
+		<!-- <constructor-arg ref="person"></constructor-arg>
+		<constructor-arg value="hello vinod"></constructor-arg> -->
+	</bean>
+
+	<bean id ="person" class="com.damvinod.spring.basics.Person" scope="singleton" autowire="byName">
+		<property name="name" value="vinod"></property>
+	</bean>
+	
+	<bean id ="person1" class="com.damvinod.spring.basics.Person" scope="singleton" autowire="byName">
+		<property name="name" value="vinod"></property>
+	</bean>
+	
+</beans>
