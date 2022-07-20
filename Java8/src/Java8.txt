@@ -1,5 +1,5 @@
 Java 8:
-
+Adding test
 1) Lambada:
 
 	Lambada expression helps to remove boiler plate codes and Anonymous class.
